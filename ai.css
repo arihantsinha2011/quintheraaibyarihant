@@ -520,3 +520,28 @@ button {
     display: none !important;
   }
 }
+.sidebar-close-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 32px;
+  height: 32px;
+  background: rgba(0,0,0,0.2);
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  padding: 0;
+}
+
+.sidebar-close-btn:hover {
+  background: rgba(0,0,0,0.35);
+}
+
+.sidebar-close-btn img {
+  width: 28px;
+  height: 30px;
+}
