@@ -8,16 +8,20 @@ const narrowNewChatBtn = document.getElementById('narrow-new-chat');
 const narrowSearchBtn = document.getElementById('narrow-search');
 const narrowModelsBtn = document.getElementById('narrow-models');
 const mainChat = document.getElementById('main-chat');
+const getApiBtn = document.getElementById('get-api-btn');
+const sendBtn = document.getElementById('send-btn');
+const micBtn = document.getElementById('mic-btn');
+const userInput = document.getElementById('user-input');
+const chatContainer = document.getElementById('chat-container');
+const closeSidebarBtn = document.getElementById('close-sidebar-btn');
 
 let chats = [
   { id: 1, title: "First Chat" },
-  { id: 2, title: "Work Discussion" },
-  { id: 3, title: "Casual Talk" },
 ];
 
 let menuOpenChatId = null;
 
-// Function to render chats filtered by search term
+// --- RENDER CHATS ---
 function renderChats(filter = "") {
   chatList.innerHTML = "";
 
@@ -33,14 +37,11 @@ function renderChats(filter = "") {
     const titleSpan = document.createElement('span');
     titleSpan.textContent = chat.title;
 
-    // 3-dot menu button replaced by invisible (since toggle in sidebar toggle)
-    // But we want the 3-dot menu per chat item on hover:
     const menuBtn = document.createElement('button');
     menuBtn.className = 'chat-menu-btn';
     menuBtn.innerHTML = '⋮';
     menuBtn.title = 'Chat options';
 
-    // Menu dropdown container
     const menu = document.createElement('div');
     menu.className = 'chat-menu';
 
@@ -57,7 +58,6 @@ function renderChats(filter = "") {
 
     menuBtn.addEventListener('click', e => {
       e.stopPropagation();
-      // Toggle menu visibility
       if (menuOpenChatId === chat.id) {
         closeMenu();
       } else {
@@ -65,7 +65,6 @@ function renderChats(filter = "") {
       }
     });
 
-    // Close menu when clicking outside
     document.addEventListener('click', closeMenu);
 
     chatItem.appendChild(titleSpan);
@@ -73,7 +72,7 @@ function renderChats(filter = "") {
     chatItem.appendChild(menu);
 
     chatItem.addEventListener('click', () => {
-      alert(`Opening chat "${chat.title}" (id: ${chat.id})`);
+      alert(`This feature is currently under development`);
     });
 
     chatList.appendChild(chatItem);
@@ -93,7 +92,7 @@ function closeMenu() {
   menuOpenChatId = null;
 }
 
-// Chat action handlers
+// --- CHAT ACTION HANDLERS ---
 function handleChatAction(action, chatId) {
   const chat = chats.find(c => c.id === chatId);
   if (!chat) return;
@@ -114,12 +113,12 @@ function handleChatAction(action, chatId) {
   }
 }
 
-// Search chats event
+// --- SEARCH CHAT ---
 searchChatInput.addEventListener('input', e => {
   renderChats(e.target.value);
 });
 
-// New chat button event (expanded)
+// --- NEW CHAT ---
 newChatBtn.addEventListener('click', () => {
   const newTitle = prompt('Enter chat name:');
   if (newTitle && newTitle.trim() !== '') {
@@ -129,45 +128,69 @@ newChatBtn.addEventListener('click', () => {
   }
 });
 
-// Narrow sidebar buttons
-document.getElementById('narrow-new-chat').addEventListener('click', () => {
-  newChatBtn.click();
-});
+// --- NARROW SIDEBAR BUTTONS ---
+narrowNewChatBtn.addEventListener('click', () => newChatBtn.click());
+narrowSearchBtn.addEventListener('click', () => { openSidebar(); searchChatInput.focus(); });
+narrowModelsBtn.addEventListener('click', () => { openSidebar(); document.getElementById('version-select').focus(); });
 
-document.getElementById('narrow-search').addEventListener('click', () => {
-  // Open sidebar and focus search
-  openSidebar();
-  searchChatInput.focus();
-});
+// --- CLOSE SIDEBAR BUTTON ---
+closeSidebarBtn.addEventListener('click', () => closeSidebar());
 
-document.getElementById('narrow-models').addEventListener('click', () => {
-  // Open sidebar and focus version select
-  openSidebar();
-  document.getElementById('version-select').focus();
-});
-document.getElementById('close-sidebar-btn').addEventListener('click', () => {
-  document.getElementById('sidebar').classList.add('closed');
-});
-
-// Sidebar toggle button
+// --- SIDEBAR TOGGLE ---
 sidebarToggle.addEventListener('click', () => {
-  if (sidebar.classList.contains('closed')) {
-    openSidebar();
-  } else {
-    closeSidebar();
-  }
+  if (sidebar.classList.contains('closed')) openSidebar();
+  else closeSidebar();
 });
 
-// Functions to open/close sidebar and update main chat margin
-// Functions to open/close sidebar
-function openSidebar() {
-  sidebar.classList.remove('closed');
+// --- OPEN / CLOSE SIDEBAR ---
+function openSidebar() { sidebar.classList.remove('closed'); }
+function closeSidebar() { sidebar.classList.add('closed'); }
+
+// --- GET API BUTTON ---
+getApiBtn.addEventListener('click', () => {
+  alert("No API keys are currently available. This feature is under development by Arihant Sinha. Once completed, you will be able to access all API features. Redirecting to AI Introduction page.");
+  window.location.href = "index.html";
+});
+
+// --- SEND BUTTON ---
+sendBtn.addEventListener('click', () => {
+  const text = userInput.value.trim();
+  if (!text) return;
+
+  // Add user's message
+  const userMsgDiv = document.createElement('div');
+  userMsgDiv.className = 'message user-message';
+  userMsgDiv.textContent = text;
+  chatContainer.appendChild(userMsgDiv);
+
+  // Add bot/development message
+  const botMsgDiv = document.createElement('div');
+  botMsgDiv.className = 'message bot-message';
+  botMsgDiv.textContent = "This application is currently in development by Arihant Sinha. After completion, all features will be fully accessible.";
+  chatContainer.appendChild(botMsgDiv);
+
+  userInput.value = "";
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+});
+
+// --- MICROPHONE BUTTON (STT) ---
+let recognition;
+if ('webkitSpeechRecognition' in window) {
+  recognition = new webkitSpeechRecognition();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+
+  recognition.onstart = () => micBtn.classList.add('recording');
+  recognition.onend = () => micBtn.classList.remove('recording');
+  recognition.onresult = event => { userInput.value = event.results[0][0].transcript; };
+} else {
+  micBtn.disabled = true;
+  micBtn.title = "Speech-to-text not supported in this browser.";
 }
 
-function closeSidebar() {
-  sidebar.classList.add('closed');
-}
-// Initial setup: closed sidebar, adjust main chat margin accordingly
+micBtn.addEventListener('click', () => { if(recognition) recognition.start(); });
+
+// --- INITIAL SETUP ---
 closeSidebar();
 renderChats();
-
