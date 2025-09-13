@@ -145,6 +145,9 @@ document.getElementById('narrow-models').addEventListener('click', () => {
   openSidebar();
   document.getElementById('version-select').focus();
 });
+document.getElementById('close-sidebar-btn').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.add('closed');
+});
 
 // Sidebar toggle button
 sidebarToggle.addEventListener('click', () => {
@@ -167,3 +170,4 @@ function closeSidebar() {
 // Initial setup: closed sidebar, adjust main chat margin accordingly
 closeSidebar();
 renderChats();
+
