@@ -5,6 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>QUINTHERA AI</title>
   <link rel="stylesheet" href="ai.css" />
+  <style>
+    /* Small Close Sidebar Button */
+    .sidebar-close-btn {
+      position: absolute; /* float over sidebar content */
+      top: 10px;          /* distance from top */
+      left: 10px;         /* distance from left */
+      width: 32px;        /* small width */
+      height: 32px;       /* small height */
+      background: rgba(0,0,0,0.2); /* subtle background */
+      border: none;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: background 0.3s ease, opacity 0.3s ease;
+    }
+
+    .sidebar-close-btn:hover {
+      background: rgba(0,0,0,0.35);
+    }
+
+    .sidebar-close-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+    }
+  </style>
 </head>
 <body>
 
@@ -22,6 +51,12 @@
 
       <!-- Expanded sidebar content -->
       <div class="sidebar-expanded">
+
+        <!-- Small Close Sidebar Button -->
+        <!-- Small Close Sidebar Button with image -->
+        <button id="close-sidebar-btn" class="sidebar-close-btn" title="Close Sidebar" aria-label="Close Sidebar">
+        <img src="hamburger.png" alt="Close Sidebar" />
+      </button>
 
         <header>Chats</header>
 
@@ -62,7 +97,7 @@
         <!-- Logo toggle button -->
         <button id="sidebar-toggle" aria-label="Toggle sidebar" title="Toggle sidebar">
           <img src="Logo.png" alt="Logo" class="logo-img" />
-          <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" >
+          <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="7" x2="21" y2="7"></line>
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="17" x2="21" y2="17"></line>
@@ -71,9 +106,7 @@
 
         <!-- Icons container -->
         <div id="narrow-icons">
-
           <button id="narrow-new-chat" title="New Chat" aria-label="New Chat">
-            <!-- Plus icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
               <line x1="12" y1="5" x2="12" y2="19"></line>
               <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -81,7 +114,6 @@
           </button>
 
           <button id="narrow-search" title="Search Chats" aria-label="Search Chats">
-            <!-- Search icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
               <circle cx="11" cy="11" r="7"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -89,13 +121,11 @@
           </button>
 
           <button id="narrow-models" title="Models" aria-label="Models">
-            <!-- Gear icon -->
             <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" width="28" height="28">
               <circle cx="12" cy="12" r="3"></circle>
               <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
             </svg>
           </button>
-
         </div>
 
       </div>
@@ -115,6 +145,8 @@
   </div>
 
   <script src="aiown.js"></script>
+  <script>
+
+  </script>
 </body>
-</html>                                                                                      
-  
+</html>
