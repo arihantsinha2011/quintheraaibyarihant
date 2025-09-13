@@ -35,7 +35,7 @@ async function getAIResponse(userMessage) {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: "Bearer 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",
+        Authorization: "Bearer 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",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -73,3 +73,4 @@ sendBtn.addEventListener("click", async () => {
 userInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") sendBtn.click();
 });
+
